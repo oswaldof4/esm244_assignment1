@@ -12,18 +12,18 @@ knitr::opts_chunk$set(echo = FALSE)
 # Introduction
 
 Here's where my 3-4 introductory sentences would go
-
+Snowshoe hares are an important keystone species. Their abundance can be used to proxy the stability of the ecosystem over time. 
 
 ## Snowshoe Hare
 
 Insert cute photographs and map of study area
 
-# Citaions
+# Citations
 
 Data from: Kielland K., F. S. Chapin, R. W. Ruess. 2017. Snowshoe hare physical data in Bonanza Creek Experimental Forest: 1999-Present. Environmental Data Initiative. https://doi.org/10.6073/pasta/03dce4856d79b91557d8e6ce2cbcdc14.  
 
 
-```{r}
+```{r, include = FALSE}
 # Load libraries and data
 
 library(tidyverse)
@@ -55,13 +55,19 @@ hare_select <- hare_df %>%
 ```
 
 
-```{r}
+```{r, fig.width = 10, fig.height = 5}
 # Visualize data
 
 ggplot(data = hare_select, aes(x = year, y = weight)) +
-  geom_point(aes(pch = age, color = season), alpha = 0.7) +
+  geom_boxplot(aes(group = year,  y = weight), 
+               alpha = 0.8, outlier.shape = NA, varwidth = TRUE) +
+  geom_jitter(aes(pch = age, color = season), 
+             alpha = 0.6, width = 0.2) +
   facet_wrap(~season) +
   guides(color = FALSE) +
   labs(pch = "Age", x = "Year", y = "Weight [g]")
 ```
+
+
+
 
