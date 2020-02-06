@@ -1,12 +1,12 @@
 ---
-title: "task2_of"
+title: "PCA Analysis Cropland Cover"
 author: "Oswaldo Felix"
 date: "2/5/2020"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(here)
 library(janitor)
@@ -34,7 +34,12 @@ my_world_pca <- prcomp(world_subset, scale = TRUE)
 
 ```
 
-```{r}
+## Introduction
+
+Principal-component-analysis is extremely useful for discerning correlation of variables within a given dataset. This project seeks to find country-level effects of increasing cropland on annual environmental extremes. By plotting eigenvectors of each variable on a biplot, one can quickly qualitatively assess trends among variables.
+
+### PCA Biplot
+```{r, }
 # Generate biplot
 
 my_biplot <- autoplot(my_world_pca,
@@ -49,3 +54,18 @@ my_biplot <- autoplot(my_world_pca,
 my_biplot
 ```
 
+**Figure 1.** *All variables show some negative correlation (angle > 90) with cropland cover*
+
+Takeaways:
+
+- Cropland cover is strongly inversely correlated with cold temperature statistics
+
+- Cropland cover is also inversely correlated with large amounts of rain, but not as strongly as the relationship seen with cold temperatures
+
+- Tree canopy cover positively correlates with rain statistics
+
+- Rain and temperature statistics correlate within respective categories
+
+### Citations
+
+The data was compiled by @zander_venter on Kaggle and originates from the [Google Earth Engine](https://earthengine.google.com/).
