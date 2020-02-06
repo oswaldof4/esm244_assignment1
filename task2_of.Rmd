@@ -1,0 +1,17 @@
+---
+title: "task2_of"
+author: "Oswaldo Felix"
+date: "2/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+```{r}
+test_df <- read_csv(here::here("data", "world_env_vars.csv"))
+```
+
