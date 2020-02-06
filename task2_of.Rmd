@@ -6,12 +6,46 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(here)
+library(janitor)
+library(ggfortify)
 ```
 
 ```{r}
-test_df <- read_csv(here::here("data", "world_env_vars.csv"))
+# Read data
+
+world_df <- read_csv(here::here("data", "world_env_vars.csv")) %>% 
+  clean_names() %>%
+  rename("rain_seasonality" = "rain_seasonailty") %>% 
+  select(-country:-slope, -isothermality, -wind, -cloudiness,
+         -contains("range"), - contains("seasonality"))
+
+```
+
+```{r}
+# Create subset
+
+world_subset <- world_df %>% 
+  drop_na()
+
+my_world_pca <- prcomp(world_subset, scale = TRUE)
+
+```
+
+```{r}
+# Generate biplot
+
+my_biplot <- autoplot(my_world_pca,
+                      colour = NA,
+                      loadings.label = TRUE,
+                      loadings.label.size = 3,
+                      loadings.label.colour = "black",
+                      loadings.label.repel = TRUE) +
+  scale_x_continuous(limits = c(-0.15, 0.15)) +
+  theme_light()
+
+my_biplot
 ```
 
